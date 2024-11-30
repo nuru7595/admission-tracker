@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -13,9 +13,18 @@ section {
 }
 
 .title {
-    @apply text-center border-b-2 border-white p-1 font-bold;
+    @apply text-center p-1 font-bold text-green-600;
 }
 
 .box {
-    @apply p-2;
+    @apply px-2;
+}
+
+table {
+    @apply w-full border-collapse table-fixed;
+}
+
+th,
+td {
+    @apply border p-1;
 }
