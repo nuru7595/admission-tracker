@@ -7,9 +7,11 @@ module.exports = {
       ubuntu: ["Ubuntu", "sans-serif"]
     },
     container: {
+      padding: {
+        DEFAULT: "12px"
+      },
       center: true
     }
   },
   plugins: [],
 }
-
