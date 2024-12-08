@@ -5,15 +5,15 @@
 @tailwind utilities;
 
 body {
-    @apply font-ubuntu bg-gray-600;
+    @apply font-ubuntu bg-bg text-white;
 }
 
 section {
-    @apply rounded-lg bg-black text-white;
+    @apply rounded-lg bg-fg my-3;
 }
 
-.title {
-    @apply text-center p-1 font-bold text-green-600;
+h3 {
+    @apply text-center py-2 font-bold;
 }
 
 .box {
@@ -26,5 +26,9 @@ table {
 
 th,
 td {
-    @apply border p-1;
+    @apply border px-2 py-1;
+}
+
+span {
+    @apply rounded-full bg-bg px-3 py-1;
 }
