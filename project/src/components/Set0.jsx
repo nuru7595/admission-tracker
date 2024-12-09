@@ -2,7 +2,7 @@ export default function Set0() {
     return (
         <section>
             <h3>Set 00</h3>
-            <div className="box">
+            <div>
                 <table>
                     <tr>
                         <th>Book</th>

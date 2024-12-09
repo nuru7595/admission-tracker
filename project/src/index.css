@@ -5,18 +5,18 @@
 @tailwind utilities;
 
 body {
-    @apply font-ubuntu bg-bg text-white;
+    @apply font-ubuntu bg-bg text-white text-center tracking-widest;
 }
 
 section {
-    @apply rounded-lg bg-fg my-3;
+    @apply rounded-xl bg-fg my-4;
 }
 
 h3 {
-    @apply text-center py-2 font-bold;
+    @apply py-2 font-bold;
 }
 
-.box {
+section > div {
     @apply px-2;
 }
 
