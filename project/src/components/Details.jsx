@@ -1,7 +1,7 @@
 export default function Details() {
     return (
         <section>
-            <h3 className="title">Update - v0.1.2</h3>
+            <h3 className="title">Update - v0.1.4</h3>
             <div className="box">
                 <table>
                     <tr>
@@ -10,7 +10,7 @@ export default function Details() {
                     </tr>
                     <tr>
                         <td>Last Updated:</td>
-                        <td>08 December 2024</td>
+                        <td>09 December 2024</td>
                     </tr>
                 </table>
             </div>

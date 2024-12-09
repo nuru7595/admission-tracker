@@ -16,17 +16,17 @@ export default function Set1() {
                     </tr>
                     <tr>
                         <td>Competitive</td>
-                        <td>17 - Loading...</td>
+                        <td>17 - 21</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>Need</td>
-                        <td>Loading...</td>
+                        <td>61 - 65</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>Ovijatri</td>
-                        <td>Loading...</td>
+                        <td>6 - Loading...</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -36,18 +36,18 @@ export default function Set1() {
                     </tr>
                     <tr>
                         <td>Rabi</td>
-                        <td>Loading...</td>
+                        <td>Pending...</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>GK</td>
-                        <td>Loading...</td>
+                        <td>Pending...</td>
                         <td></td>
                     </tr>
                 </table>
             </div>
             <h3>
-                <span>1 - 3 December 2024</span>
+                <span>1 - 3, 9 December 2024</span>
             </h3>
         </section>
     );
