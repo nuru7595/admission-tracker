@@ -26,7 +26,7 @@ export default function Set1() {
                     </tr>
                     <tr>
                         <td>Ovijatri</td>
-                        <td>6 - Loading...</td>
+                        <td>6 - 10</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -36,7 +36,7 @@ export default function Set1() {
                     </tr>
                     <tr>
                         <td>Rabi</td>
-                        <td>Pending...</td>
+                        <td>129 - 132, Loading...</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -47,7 +47,7 @@ export default function Set1() {
                 </table>
             </div>
             <h3>
-                <span>1 - 3, 9 December 2024</span>
+                <span>1 - 3, 9 - 10 December 2024</span>
             </h3>
         </section>
     );
