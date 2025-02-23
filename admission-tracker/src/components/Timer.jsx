@@ -73,7 +73,7 @@ const Timer = () => {
                 Friday
             </h4>
             <h2 className="mt-4 font-bold">Times Left:</h2>
-            <div className="flex justify-center space-x-6 font-bold bg-black rounded-xl py-2">
+            <div className="flex justify-center items-center flex-col sm:flex-row sm:space-x-6 font-bold bg-black rounded-xl py-2">
                 <div className="flex flex-col items-center">
                     <span className="text-4xl text-green-600">
                         {timeLeft.months}

@@ -3,7 +3,7 @@ import { data } from "../data/data";
 export default function Execution() {
     return data.map((x, i) => (
         <div key={i} className="section-container">
-            <table className="w-full">
+            <table className="w-full text-center text-xs sm:text-base">
                 <caption className="text-xl font-bold mb-1">{x.date}</caption>
                 <thead>
                     <th>Subject</th>
@@ -11,9 +11,9 @@ export default function Execution() {
                     <th>Weekly</th>
                     <th>Daily</th>
                 </thead>
-                <tbody className="text-center">
+                <tbody>
                     <tr>
-                        <td>Bangla 1st</td>
+                        <td>Ban. 1st</td>
                         <td
                             className={x.mb1 ? "bg-green-600" : "bg-red-600"}
                         >{x.mb1}</td>
@@ -25,7 +25,7 @@ export default function Execution() {
                         >{x.db1}</td>
                     </tr>
                     <tr>
-                        <td>Bangla 2nd</td>
+                        <td>Ban. 2nd</td>
                         <td
                             className={x.mb2 ? "bg-green-600" : "bg-red-600"}
                         >{x.mb2}</td>
@@ -37,7 +37,7 @@ export default function Execution() {
                         >{x.db2}</td>
                     </tr>
                     <tr>
-                        <td>English</td>
+                        <td>Eng.</td>
                         <td
                             className={x.men ? "bg-green-600" : "bg-red-600"}
                         >{x.men}</td>
@@ -61,7 +61,7 @@ export default function Execution() {
                         >{x.dc}</td>
                     </tr>
                     <tr>
-                        <td>Economics</td>
+                        <td>Eco.</td>
                         <td
                             className={x.me ? "bg-green-600" : "bg-red-600"}
                         >{x.me}</td>
@@ -73,7 +73,7 @@ export default function Execution() {
                         >{x.de}</td>
                     </tr>
                     <tr>
-                        <td>Sociology</td>
+                        <td>Socio.</td>
                         <td
                             className={x.ms ? "bg-green-600" : "bg-red-600"}
                         >{x.ms}</td>
@@ -85,7 +85,7 @@ export default function Execution() {
                         >{x.ds}</td>
                     </tr>
                     <tr>
-                        <td>Phycology</td>
+                        <td>Phyc.</td>
                         <td
                             className={x.mp ? "bg-green-600" : "bg-red-600"}
                         >{x.mp}</td>
