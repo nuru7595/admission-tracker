@@ -7,13 +7,13 @@ export default function Execution() {
                 <caption className="text-xl font-bold mb-1">{x.date}</caption>
                 <thead>
                     <th>Subject</th>
-                    <th>Monthly</th>
-                    <th>Weekly</th>
-                    <th>Daily</th>
+                    <th>Monthly (Page)</th>
+                    <th>Weekly (Page)</th>
+                    <th>Daily (Page)</th>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Ban. 1st</td>
+                        <td>Ban. 1</td>
                         <td
                             className={x.mb1 ? "bg-green-600" : "bg-red-600"}
                         >{x.mb1}</td>
@@ -25,7 +25,7 @@ export default function Execution() {
                         >{x.db1}</td>
                     </tr>
                     <tr>
-                        <td>Ban. 2nd</td>
+                        <td>Ban. 2</td>
                         <td
                             className={x.mb2 ? "bg-green-600" : "bg-red-600"}
                         >{x.mb2}</td>
