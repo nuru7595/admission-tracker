@@ -68,7 +68,7 @@ const Timer = () => {
                 Saturday
             </h4>
             <h4>
-                No Study:{" "}
+                Off Day:{" "}
                 <span className="text-green-600 font-bold">02 May 2025</span>{" "}
                 Friday
             </h4>
