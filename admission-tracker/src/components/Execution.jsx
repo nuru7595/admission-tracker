@@ -9,13 +9,22 @@ export default function Execution() {
         ec: { name: "Eco.", planned: 20, monthly: 10, weekly: 3, daily: 1 },
         sc: { name: "Socio.", planned: 14, monthly: 7, weekly: 2, daily: 1 },
         py: { name: "Phyc.", planned: 14, monthly: 7, weekly: 2, daily: 1 },
-        gk: { name: "GK", planned: 50, monthly: 25, weekly: 6, daily: 1 }
+        gk: { name: "GK", planned: 50, monthly: 25, weekly: 6, daily: 1 },
     };
 
+    // Function to calculate the number of pages studied
+    const calculatePagesStudied = (pageString) => {
+        if (!pageString) return 0; // Handle empty strings
+        return pageString.split(",").length; // Count the number of pages
+    };
+
+    // Function to calculate totals
     const calculateTotals = (days) => {
         return Object.keys(subjects).reduce((totals, key) => {
-            totals[key] = (days ? data.slice(0, days) : data)
-                .reduce((sum, entry) => sum + (parseInt(entry[key], 10) || 0), 0);
+            totals[key] = (days ? data.slice(0, days) : data).reduce(
+                (sum, entry) => sum + calculatePagesStudied(entry[key]),
+                0
+            );
             return totals;
         }, {});
     };
@@ -26,10 +35,12 @@ export default function Execution() {
         week: calculateTotals(7),
     };
 
-    const getBgColor = (studied, planned) => studied >= planned ? "bg-green-600" : "bg-red-600";
+    const getBgColor = (studied, planned) =>
+        studied >= planned ? "bg-green-600" : "bg-red-600";
 
     return (
         <div className="section-container">
+            {/* Main Table */}
             <table className="w-full text-center text-xs sm:text-base">
                 <thead>
                     <tr>
@@ -40,31 +51,69 @@ export default function Execution() {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(subjects).map(([key, { name, planned, monthly, weekly }]) => (
-                        <tr key={key}>
-                            <td>{name}</td>
-                            <td className={`${getBgColor(totals.all[key], planned)} text-white p-2`}>{totals.all[key]}</td>
-                            <td className={`${getBgColor(totals.month[key], monthly)} text-white p-2`}>{totals.month[key]}</td>
-                            <td className={`${getBgColor(totals.week[key], weekly)} text-white p-2`}>{totals.week[key]}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {data.map((x, i) => (
-                <table key={i} className="my-3 w-full text-center text-xs sm:text-base">
-                    <caption className="font-bold text-xl my-2">{x.id}</caption>
-                    <thead>
-                        <tr><th>Subject</th><th>Studied</th></tr>
-                    </thead>
-                    <tbody>
-                        {Object.entries(subjects).map(([key, { name, daily }]) => (
+                    {Object.entries(subjects).map(
+                        ([key, { name, planned, monthly, weekly }]) => (
                             <tr key={key}>
                                 <td>{name}</td>
-                                <td className={`${getBgColor(x[key], daily)} text-white p-2`}>
-                                    {x[key] || "0"}
+                                <td
+                                    className={`${getBgColor(
+                                        totals.all[key],
+                                        planned
+                                    )} text-white p-2`}
+                                >
+                                    {totals.all[key]}
+                                </td>
+                                <td
+                                    className={`${getBgColor(
+                                        totals.month[key],
+                                        monthly
+                                    )} text-white p-2`}
+                                >
+                                    {totals.month[key]}
+                                </td>
+                                <td
+                                    className={`${getBgColor(
+                                        totals.week[key],
+                                        weekly
+                                    )} text-white p-2`}
+                                >
+                                    {totals.week[key]}
                                 </td>
                             </tr>
-                        ))}
+                        )
+                    )}
+                </tbody>
+            </table>
+
+            {/* Daily Tables */}
+            {data.map((x, i) => (
+                <table
+                    key={i}
+                    className="my-3 w-full text-center text-xs sm:text-base table-fixed"
+                >
+                    <caption className="font-bold text-xl my-2">{x.id}</caption>
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Pages Read</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.entries(subjects).map(
+                            ([key, { name, daily }]) => (
+                                <tr key={key}>
+                                    <td>{name}</td>
+                                    <td
+                                        className={`${getBgColor(
+                                            calculatePagesStudied(x[key]),
+                                            daily
+                                        )} text-white p-2`}
+                                    >
+                                        {x[key]}
+                                    </td>
+                                </tr>
+                            )
+                        )}
                     </tbody>
                 </table>
             ))}

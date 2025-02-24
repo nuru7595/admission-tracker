@@ -1,6 +1,6 @@
 export const data = [
     {
-        id: "24 Feb 2025",
+        id: "25 Feb 2025",
         b1: "",
         b2: "",
         en: "",
@@ -9,5 +9,11 @@ export const data = [
         sc: "",
         py: "",
         gk: "",
+    },
+    {
+        id: "24 Feb 2025",
+        b1: "123",
+        b2: "184",
+        en: "279",
     },
 ];
