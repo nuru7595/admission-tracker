@@ -36,9 +36,9 @@ export default function App() {
                                     <tr key={name}>
                                         <td>{name}</td>
                                         <td>{total}</td>
-                                        <td>{Math.ceil(total / 2)}</td>
-                                        <td>{Math.ceil(total / 8)}</td>
-                                        <td>{Math.ceil(total / 66)}</td>
+                                        <td>{Math.ceil(total / (53 / 30))}</td>
+                                        <td>{Math.ceil(total / (53 / 7))}</td>
+                                        <td>{Math.ceil(total / 53)}</td>
                                     </tr>
                                 ))}
                             </tbody>
