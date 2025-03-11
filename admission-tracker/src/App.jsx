@@ -3,13 +3,20 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Timer from "./components/Timer";
 
-const subjects = [
-    { name: "Ban. 1", total: 80 }, { name: "Ban. 2", total: 76 }, { name: "Eng.", total: 90 },
-    { name: "Civics", total: 18 }, { name: "Eco.", total: 20 }, { name: "Socio.", total: 14 },
-    { name: "Psyc.", total: 14 }, { name: "GK", total: 50 }
-];
-
 export default function App() {
+    const daysLeft = 50;
+
+    const subjects = [
+        { name: "Ban. 1", total: 80 },
+        { name: "Ban. 2", total: 76 },
+        { name: "Eng.", total: 90 },
+        { name: "Civics", total: 18 },
+        { name: "Eco.", total: 20 },
+        { name: "Socio.", total: 14 },
+        { name: "Psyc.", total: 14 },
+        { name: "GK", total: 50 },
+    ];
+
     return (
         <>
             <Header text="Admission Tracker" />
@@ -36,9 +43,13 @@ export default function App() {
                                     <tr key={name}>
                                         <td>{name}</td>
                                         <td>{total}</td>
-                                        <td>{Math.ceil(total / (53 / 30))}</td>
-                                        <td>{Math.ceil(total / (53 / 7))}</td>
-                                        <td>{Math.ceil(total / 53)}</td>
+                                        <td>
+                                            {Math.ceil(total / (daysLeft / 30))}
+                                        </td>
+                                        <td>
+                                            {Math.ceil(total / (daysLeft / 7))}
+                                        </td>
+                                        <td>{Math.ceil(total / daysLeft)}</td>
                                     </tr>
                                 ))}
                             </tbody>

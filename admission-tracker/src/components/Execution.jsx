@@ -2,14 +2,14 @@ import { data } from "../data/data";
 
 export default function Execution() {
     const subjects = {
-        b1: { name: "Ban. 1", planned: 80, monthly: 46, weekly: 11, daily: 2 },
-        b2: { name: "Ban. 2", planned: 76, monthly: 44, weekly: 11, daily: 2 },
-        en: { name: "Eng.", planned: 90, monthly: 51, weekly: 12, daily: 2 },
+        b1: { name: "Ban. 1", planned: 80, monthly: 48, weekly: 12, daily: 2 },
+        b2: { name: "Ban. 2", planned: 76, monthly: 46, weekly: 11, daily: 2 },
+        en: { name: "Eng.", planned: 90, monthly: 54, weekly: 13, daily: 2 },
         cv: { name: "Civics", planned: 18, monthly: 11, weekly: 3, daily: 1 },
         ec: { name: "Eco.", planned: 20, monthly: 12, weekly: 3, daily: 1 },
-        sc: { name: "Socio.", planned: 14, monthly: 8, weekly: 2, daily: 1 },
-        py: { name: "Phyc.", planned: 14, monthly: 8, weekly: 2, daily: 1 },
-        gk: { name: "GK", planned: 50, monthly: 29, weekly: 7, daily: 1 },
+        sc: { name: "Socio.", planned: 14, monthly: 9, weekly: 2, daily: 1 },
+        py: { name: "Phyc.", planned: 14, monthly: 9, weekly: 2, daily: 1 },
+        gk: { name: "GK", planned: 50, monthly: 30, weekly: 7, daily: 1 },
     };
 
     // Function to calculate the number of pages studied
