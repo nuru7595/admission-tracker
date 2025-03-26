@@ -2,23 +2,21 @@ import { data } from "../data/data";
 
 export default function Execution() {
     const subjects = {
-        b1: { name: "Ban. 1", planned: 80, monthly: 48, weekly: 12, daily: 2 },
-        b2: { name: "Ban. 2", planned: 76, monthly: 46, weekly: 11, daily: 2 },
-        en: { name: "Eng.", planned: 90, monthly: 54, weekly: 13, daily: 2 },
-        cv: { name: "Civics", planned: 18, monthly: 11, weekly: 3, daily: 1 },
-        ec: { name: "Eco.", planned: 20, monthly: 12, weekly: 3, daily: 1 },
-        sc: { name: "Socio.", planned: 14, monthly: 9, weekly: 2, daily: 1 },
-        py: { name: "Phyc.", planned: 14, monthly: 9, weekly: 2, daily: 1 },
-        gk: { name: "GK", planned: 50, monthly: 30, weekly: 7, daily: 1 },
+        b1: { name: "Ban. 1", planned: 80, weekly: 16, daily: 3 },
+        b2: { name: "Ban. 2", planned: 76, weekly: 15, daily: 3 },
+        en: { name: "Eng.", planned: 90, weekly: 18, daily: 3 },
+        cv: { name: "Civics", planned: 18, weekly: 4, daily: 1 },
+        ec: { name: "Eco.", planned: 20, weekly: 4, daily: 1 },
+        sc: { name: "Socio.", planned: 14, weekly: 3, daily: 1 },
+        py: { name: "Phyc.", planned: 14, weekly: 3, daily: 1 },
+        gk: { name: "GK", planned: 50, weekly: 10, daily: 2 },
     };
 
-    // Function to calculate the number of pages studied
     const calculatePagesStudied = (pageString) => {
-        if (!pageString) return 0; // Handle empty strings
-        return pageString.split(",").length; // Count the number of pages
+        if (!pageString) return 0;
+        return pageString.split(",").length;
     };
 
-    // Function to calculate totals
     const calculateTotals = (days) => {
         return Object.keys(subjects).reduce((totals, key) => {
             totals[key] = (days ? data.slice(0, days) : data).reduce(
@@ -31,7 +29,6 @@ export default function Execution() {
 
     const totals = {
         all: calculateTotals(),
-        month: calculateTotals(30),
         week: calculateTotals(7),
     };
 
@@ -40,19 +37,17 @@ export default function Execution() {
 
     return (
         <div className="section-container">
-            {/* Main Table */}
             <table className="w-full text-center text-xs sm:text-base">
                 <thead>
                     <tr>
                         <th>Subject</th>
                         <th>Total</th>
-                        <th>Monthly</th>
                         <th>Weekly</th>
                     </tr>
                 </thead>
                 <tbody>
                     {Object.entries(subjects).map(
-                        ([key, { name, planned, monthly, weekly }]) => (
+                        ([key, { name, planned, weekly }]) => (
                             <tr key={key}>
                                 <td>{name}</td>
                                 <td
@@ -62,14 +57,6 @@ export default function Execution() {
                                     )} text-white p-2`}
                                 >
                                     {totals.all[key]}
-                                </td>
-                                <td
-                                    className={`${getBgColor(
-                                        totals.month[key],
-                                        monthly
-                                    )} text-white p-2`}
-                                >
-                                    {totals.month[key]}
                                 </td>
                                 <td
                                     className={`${getBgColor(
@@ -85,7 +72,6 @@ export default function Execution() {
                 </tbody>
             </table>
 
-            {/* Daily Tables */}
             {data.map((x, i) => (
                 <table
                     key={i}
@@ -99,8 +85,9 @@ export default function Execution() {
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.entries(subjects).map(
-                            ([key, { name, daily }]) => (
+                        {Object.entries(subjects)
+                            .filter(([key]) => x[key])
+                            .map(([key, { name, daily }]) => (
                                 <tr key={key}>
                                     <td>{name}</td>
                                     <td
@@ -112,8 +99,7 @@ export default function Execution() {
                                         {x[key]}
                                     </td>
                                 </tr>
-                            )
-                        )}
+                            ))}
                     </tbody>
                 </table>
             ))}

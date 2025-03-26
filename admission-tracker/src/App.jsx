@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Timer from "./components/Timer";
 
 export default function App() {
-    const daysLeft = 50;
+    const daysLeft = 36;
 
     const subjects = [
         { name: "Ban. 1", total: 80 },
@@ -33,7 +33,6 @@ export default function App() {
                                 <tr>
                                     <th>Subject</th>
                                     <th>Total</th>
-                                    <th>Monthly</th>
                                     <th>Weekly</th>
                                     <th>Daily</th>
                                 </tr>
@@ -43,9 +42,6 @@ export default function App() {
                                     <tr key={name}>
                                         <td>{name}</td>
                                         <td>{total}</td>
-                                        <td>
-                                            {Math.ceil(total / (daysLeft / 30))}
-                                        </td>
                                         <td>
                                             {Math.ceil(total / (daysLeft / 7))}
                                         </td>
