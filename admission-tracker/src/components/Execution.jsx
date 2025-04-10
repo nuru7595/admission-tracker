@@ -1,83 +1,86 @@
 import { data } from "../data/data";
 
-export default function Execution() {
+export default function Execution({ daysLeft }) {
     const subjects = {
-        b1: { name: "Ban. 1", planned: 80, weekly: 16, daily: 3 },
-        b2: { name: "Ban. 2", planned: 76, weekly: 15, daily: 3 },
-        en: { name: "Eng.", planned: 90, weekly: 18, daily: 3 },
-        cv: { name: "Civics", planned: 18, weekly: 4, daily: 1 },
-        ec: { name: "Eco.", planned: 20, weekly: 4, daily: 1 },
-        sc: { name: "Socio.", planned: 14, weekly: 3, daily: 1 },
-        py: { name: "Phyc.", planned: 14, weekly: 3, daily: 1 },
-        gk: { name: "GK", planned: 50, weekly: 10, daily: 2 },
+        b1: { name: "Ban. 1", planned: 80 },
+        b2: { name: "Ban. 2", planned: 76 },
+        en: { name: "Eng.", planned: 90 },
+        cv: { name: "Civics", planned: 18 },
+        ec: { name: "Eco.", planned: 20 },
+        sc: { name: "Socio.", planned: 14 },
+        py: { name: "Psyc.", planned: 14 },
+        gk: { name: "GK", planned: 50 },
     };
 
-    const calculatePagesStudied = (pageString) => {
-        if (!pageString) return 0;
-        return pageString.split(",").length;
-    };
+    const getPagesCount = (pages) =>
+        pages?.split(",").filter((x) => x.trim() !== "").length || 0;
 
-    const calculateTotals = (days) => {
-        return Object.keys(subjects).reduce((totals, key) => {
-            totals[key] = (days ? data.slice(0, days) : data).reduce(
-                (sum, entry) => sum + calculatePagesStudied(entry[key]),
-                0
-            );
-            return totals;
-        }, {});
-    };
+    // Calculate total pages read
+    const totalRead = Object.keys(subjects).reduce((acc, key) => {
+        acc[key] = data.reduce((sum, entry) => sum + getPagesCount(entry[key]), 0);
+        return acc;
+    }, {});
 
-    const totals = {
-        all: calculateTotals(),
-        week: calculateTotals(7),
-    };
+    // Calculate total planned pages
+    const totalPlanned = Object.values(subjects).reduce((sum, { planned }) => sum + planned, 0);
 
-    const getBgColor = (studied, planned) =>
-        studied >= planned ? "bg-green-600" : "bg-red-600";
+    // Calculate percentage progress
+    const totalReadSum = Object.values(totalRead).reduce((sum, read) => sum + read, 0);
+    const progressPercentage = Math.min(
+        Math.round((totalReadSum / totalPlanned) * 100),
+        100
+    );
+
+    const getBg = (read, target) =>
+        read >= target ? "bg-green-600" : "bg-red-600";
 
     return (
         <div className="section-container">
-            <table className="w-full text-center text-xs sm:text-base">
+            {/* Summary Table */}
+            <table className="w-full text-center text-xs sm:text-base mb-4">
                 <thead>
                     <tr>
                         <th>Subject</th>
-                        <th>Total</th>
-                        <th>Weekly</th>
+                        <th>Total Read / Planned</th>
+                        <th>Daily Target</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(subjects).map(
-                        ([key, { name, planned, weekly }]) => (
+                    {Object.entries(subjects).map(([key, { name, planned }]) => {
+                        const read = totalRead[key];
+                        const remaining = Math.max(0, planned - read);
+                        const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
+
+                        return (
                             <tr key={key}>
                                 <td>{name}</td>
-                                <td
-                                    className={`${getBgColor(
-                                        totals.all[key],
-                                        planned
-                                    )} text-white p-2`}
-                                >
-                                    {totals.all[key]}
+                                <td className={`${getBg(read, planned)} text-white p-2`}>
+                                    {read} / {planned}
                                 </td>
-                                <td
-                                    className={`${getBgColor(
-                                        totals.week[key],
-                                        weekly
-                                    )} text-white p-2`}
-                                >
-                                    {totals.week[key]}
-                                </td>
+                                <td>{dynamicDaily}</td>
                             </tr>
-                        )
-                    )}
+                        );
+                    })}
                 </tbody>
             </table>
 
-            {data.map((x, i) => (
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-6">
+                <div
+                    className="bg-green-600 h-full text-xs text-center text-white rounded-full"
+                    style={{ width: `${progressPercentage}%` }}
+                >
+                    {progressPercentage}%
+                </div>
+            </div>
+
+            {/* Daily Breakdown Table */}
+            {data.map((entry, index) => (
                 <table
-                    key={i}
+                    key={index}
                     className="my-3 w-full text-center text-xs sm:text-base table-fixed"
                 >
-                    <caption className="font-bold text-xl my-2">{x.id}</caption>
+                    <caption className="font-bold text-xl my-2">{entry.id}</caption>
                     <thead>
                         <tr>
                             <th>Subject</th>
@@ -86,20 +89,21 @@ export default function Execution() {
                     </thead>
                     <tbody>
                         {Object.entries(subjects)
-                            .filter(([key]) => x[key])
-                            .map(([key, { name, daily }]) => (
-                                <tr key={key}>
-                                    <td>{name}</td>
-                                    <td
-                                        className={`${getBgColor(
-                                            calculatePagesStudied(x[key]),
-                                            daily
-                                        )} text-white p-2`}
-                                    >
-                                        {x[key]}
-                                    </td>
-                                </tr>
-                            ))}
+                            .filter(([key]) => entry[key])
+                            .map(([key, { name, planned }]) => {
+                                const pagesRead = getPagesCount(entry[key]);
+                                const remaining = Math.max(0, planned - totalRead[key]);
+                                const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
+
+                                return (
+                                    <tr key={key}>
+                                        <td>{name}</td>
+                                        <td className={`${getBg(pagesRead, dynamicDaily)} text-white p-2`}>
+                                            {entry[key]}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             ))}

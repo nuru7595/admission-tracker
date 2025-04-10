@@ -1,66 +1,55 @@
 import { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
-    const [timeLeft, setTimeLeft] = useState({
-        days: "00",
-        hours: "00",
-        minutes: "00",
-        seconds: "00",
-    });
-
-    const targetDate = useMemo(() => new Date("2025-05-02T00:00:00"), []);
+    const [time, setTime] = useState({});
+    const targetDate = useMemo(() => new Date("2025-05-02"), []);
 
     useEffect(() => {
-        const updateTime = () => {
+        const update = () => {
             const now = new Date();
-            const difference = targetDate - now;
+            const diff = targetDate - now;
 
-            if (difference <= 0) {
-                setTimeLeft({
-                    days: "00",
-                    hours: "00",
-                    minutes: "00",
-                    seconds: "00",
-                });
-                return;
-            }
+            if (diff <= 0)
+                return setTime({ d: "00", h: "00", m: "00", s: "00" });
 
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(
-                (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            const d = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(
+                2,
+                "0"
             );
-            const minutes = Math.floor(
-                (difference % (1000 * 60 * 60)) / (1000 * 60)
+            const h = String(
+                Math.floor((diff / (1000 * 60 * 60)) % 24)
+            ).padStart(2, "0");
+            const m = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(
+                2,
+                "0"
             );
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            const s = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
 
-            setTimeLeft((prev) => {
-                const newTime = {
-                    days: String(days).padStart(2, "0"),
-                    hours: String(hours).padStart(2, "0"),
-                    minutes: String(minutes).padStart(2, "0"),
-                    seconds: String(seconds).padStart(2, "0"),
-                };
+            setTime((prev) => {
+                const newTime = { d, h, m, s };
                 return JSON.stringify(prev) === JSON.stringify(newTime)
                     ? prev
                     : newTime;
             });
         };
 
-        updateTime();
-        const interval = setInterval(updateTime, 1000);
+        update();
+        const interval = setInterval(update, 1000);
         return () => clearInterval(interval);
     }, [targetDate]);
 
     return (
         <div className="section-container text-center space-y-3">
             <div className="flex justify-center items-center flex-col sm:flex-row font-bold gap-4 sm:gap-6 bg-black py-3 rounded-md">
-                {Object.entries(timeLeft).map(([key, value]) => (
-                    <div key={key} className="flex flex-col items-center">
+                {[
+                    { label: "Days", value: time.d },
+                    { label: "Hours", value: time.h },
+                    { label: "Minutes", value: time.m },
+                    { label: "Seconds", value: time.s },
+                ].map(({ label, value }) => (
+                    <div key={label} className="flex flex-col items-center">
                         <span className="text-4xl text-green-600">{value}</span>
-                        <span>
-                            {key.charAt(0).toUpperCase() + key.slice(1)}
-                        </span>
+                        <span>{label}</span>
                     </div>
                 ))}
             </div>

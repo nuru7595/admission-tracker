@@ -1,28 +1,30 @@
-import { useEffect, useState } from "react";
-import Execution from "./components/Execution";
-import Footer from "./components/Footer";
+import { useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import Timer from "./components/Timer";
 import Login from "./components/Login";
+import Execution from "./components/Execution";
+import Footer from "./components/Footer";
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const daysLeft = 36;
+    const [daysLeft, setDaysLeft] = useState(0);
 
-    const subjects = [
-        { name: "Ban. 1", total: 80 },
-        { name: "Ban. 2", total: 76 },
-        { name: "Eng.", total: 90 },
-        { name: "Civics", total: 18 },
-        { name: "Eco.", total: 20 },
-        { name: "Socio.", total: 14 },
-        { name: "Psyc.", total: 14 },
-        { name: "GK", total: 50 },
-    ];
+    const targetDate = useMemo(() => new Date("2025-05-02"), []);
 
     useEffect(() => {
-        const loggedInFlag = localStorage.getItem("loggedIn");
-        if (loggedInFlag === "true") {
+        const updateDaysLeft = () => {
+            const now = new Date();
+            const diff = targetDate - now;
+            setDaysLeft(Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24))));
+        };
+
+        updateDaysLeft();
+        const interval = setInterval(updateDaysLeft, 1000);
+        return () => clearInterval(interval);
+    }, [targetDate]);
+
+    useEffect(() => {
+        if (localStorage.getItem("loggedIn") === "true") {
             setIsLoggedIn(true);
         }
     }, []);
@@ -31,54 +33,18 @@ export default function App() {
         <>
             <Header text="Admission Tracker" />
             <main className="container">
-                {/* Always visible */}
                 <section>
                     <h2 className="section-title">The Timer</h2>
                     <Timer />
                 </section>
 
-                {/* Conditionally rendered */}
                 {!isLoggedIn ? (
                     <Login onLogin={() => setIsLoggedIn(true)} />
                 ) : (
-                    <>
-                        <section>
-                            <h2 className="section-title">The Plan</h2>
-                            <div className="section-container">
-                                <table className="w-full text-center text-xs sm:text-base">
-                                    <thead>
-                                        <tr>
-                                            <th>Subject</th>
-                                            <th>Total</th>
-                                            <th>Weekly</th>
-                                            <th>Daily</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {subjects.map(({ name, total }) => (
-                                            <tr key={name}>
-                                                <td>{name}</td>
-                                                <td>{total}</td>
-                                                <td>
-                                                    {Math.ceil(
-                                                        total / (daysLeft / 7)
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    {Math.ceil(total / daysLeft)}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
-
-                        <section>
-                            <h2 className="section-title">The Execution</h2>
-                            <Execution />
-                        </section>
-                    </>
+                    <section>
+                        <h2 className="section-title">The Execution</h2>
+                        <Execution daysLeft={daysLeft} />
+                    </section>
                 )}
             </main>
             <Footer name="Nuru" />
