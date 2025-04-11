@@ -72,19 +72,19 @@ export default function App() {
                     <h3 className="section-title">Times to Notice</h3>
                     <div className="section-container">
                         <p>
-                            1. Get Ready By:{" "}
+                            1. Start Getting Ready:{" "}
                             <span className="font-bold text-green-600">
                                 8:00 AM
                             </span>
                         </p>
                         <p>
-                            2. Start Your Journey:{" "}
+                            2. Leave for College:{" "}
                             <span className="font-bold text-green-600">
                                 9:00 AM
                             </span>
                         </p>
                         <p>
-                            3. Be Seated By:{" "}
+                            3. Be Seated in Exam Hall By:{" "}
                             <span className="font-bold text-green-600">
                                 10:30 AM
                             </span>
