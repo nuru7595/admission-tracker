@@ -34,13 +34,13 @@ export default function App() {
             <Header text="Admission Tracker" />
             <main className="container">
                 <section>
-                    <h2 className="section-title">The Timer</h2>
+                    <h3 className="section-title">The Timer</h3>
                     <Timer />
                 </section>
 
                 <section>
-                    <h2 className="section-title">Exam Essentials</h2>
-                    <div className="section-container text-lg">
+                    <h3 className="section-title">Exam Essentials</h3>
+                    <div className="section-container">
                         <p>
                             1.{" "}
                             <span className="font-bold text-green-600">
@@ -69,8 +69,8 @@ export default function App() {
                         </p>
                     </div>
 
-                    <h2 className="section-title">Times to Notice</h2>
-                    <div className="section-container text-lg">
+                    <h3 className="section-title">Times to Notice</h3>
+                    <div className="section-container">
                         <p>
                             1. Get Ready By:{" "}
                             <span className="font-bold text-green-600">

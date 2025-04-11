@@ -1,7 +1,7 @@
 export default function Header({ text }) {
     return (
         <header>
-            <h1>{text}</h1>
+            <h2>{text}</h2>
         </header>
     );
 }

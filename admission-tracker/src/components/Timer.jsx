@@ -48,21 +48,21 @@ const Timer = () => {
                     { label: "Seconds", value: time.s },
                 ].map(({ label, value }) => (
                     <div key={label} className="flex flex-col items-center">
-                        <span className="text-4xl text-green-600">{value}</span>
+                        <span className="text-2xl sm:text-4xl text-green-600">{value}</span>
                         <span>{label}</span>
                     </div>
                 ))}
             </div>
-            <h4>
+            <p>
                 Off Day:{" "}
                 <span className="text-green-600 font-bold">02 May 2025</span>{" "}
                 Friday
-            </h4>
-            <h4>
+            </p>
+            <p>
                 Exam Date:{" "}
                 <span className="text-green-600 font-bold">03 May 2025</span>{" "}
                 Saturday
-            </h4>
+            </p>
         </div>
     );
 };

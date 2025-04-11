@@ -54,7 +54,7 @@ export default function Execution({ daysLeft, isLoggedIn, onLogin }) {
 
     return (
         <section>
-            <h2 className="section-title !border-b-0">The Execution</h2>
+            <h3 className="section-title !border-b-0">The Execution</h3>
             {/* Progress Bar */}
             <div className="w-full bg-white h-4 overflow-hidden">
                 <div
