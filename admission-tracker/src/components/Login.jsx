@@ -14,27 +14,26 @@ export default function Login({ onLogin }) {
     };
 
     return (
-        <section>
-            <h2 className="section-title">Login</h2>
-            <form
-                onSubmit={handleLogin}
-                className="section-container"
-            >
+        <div className="section-container">
+            <p className="text-center text-green-600 mb-3">
+                🔒 Please log in to see the full execution breakdown.
+            </p>
+            <form onSubmit={handleLogin}>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter Password . . ."
-                    className="w-full block border border-white rounded-lg p-2 bg-black outline-none text-center"
+                    className="w-full block border-y-2 border-white rounded-lg p-1 outline-none text-center"
                     required
                 />
                 <button
                     type="submit"
-                    className="w-full block border border-white rounded-lg p-2 bg-black mt-3 cursor-pointer select-none"
+                    className="w-full block border-y-2 border-white rounded-lg p-1 mt-3 cursor-pointer select-none"
                 >
-                    Login
+                    Log In
                 </button>
             </form>
-        </section>
+        </div>
     );
 }

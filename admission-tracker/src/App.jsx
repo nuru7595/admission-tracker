@@ -38,14 +38,71 @@ export default function App() {
                     <Timer />
                 </section>
 
-                {!isLoggedIn ? (
-                    <Login onLogin={() => setIsLoggedIn(true)} />
-                ) : (
-                    <section>
-                        <h2 className="section-title">The Execution</h2>
-                        <Execution daysLeft={daysLeft} />
-                    </section>
-                )}
+                <section>
+                    <h2 className="section-title">Exam Essentials</h2>
+                    <div className="section-container text-lg">
+                        <p>
+                            1.{" "}
+                            <span className="font-bold text-green-600">
+                                Admit Card
+                            </span>{" "}
+                            (You will get it 7 days before the exam.)
+                        </p>
+                        <p>
+                            2. HSC{" "}
+                            <span className="font-bold text-green-600">
+                                Registration Card
+                            </span>
+                        </p>
+                        <p>
+                            3. Up to 3-4 Black{" "}
+                            <span className="font-bold text-green-600">
+                                Ballpoint Pens
+                            </span>
+                        </p>
+                        <p>
+                            4. A Scientific{" "}
+                            <span className="font-bold text-green-600">
+                                Calculator
+                            </span>{" "}
+                            (Optional)
+                        </p>
+                    </div>
+
+                    <h2 className="section-title">Times to Notice</h2>
+                    <div className="section-container text-lg">
+                        <p>
+                            1. Get Ready By:{" "}
+                            <span className="font-bold text-green-600">
+                                8:00 AM
+                            </span>
+                        </p>
+                        <p>
+                            2. Start Your Journey:{" "}
+                            <span className="font-bold text-green-600">
+                                9:00 AM
+                            </span>
+                        </p>
+                        <p>
+                            3. Be Seated By:{" "}
+                            <span className="font-bold text-green-600">
+                                10:30 AM
+                            </span>
+                        </p>
+                        <p>
+                            4. Exam Time:{" "}
+                            <span className="font-bold text-green-600">
+                                11:00 AM – 12:00 PM
+                            </span>
+                        </p>
+                    </div>
+                </section>
+
+                <Execution
+                    daysLeft={daysLeft}
+                    isLoggedIn={isLoggedIn}
+                    onLogin={() => setIsLoggedIn(true)}
+                />
             </main>
             <Footer name="Nuru" />
         </>
