@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
     const [time, setTime] = useState({});
-    const targetDate = useMemo(() => new Date("2025-05-02"), []);
+    const targetDate = useMemo(() => new Date(2025, 4, 2, 8, 0, 0), []);
 
     useEffect(() => {
         const update = () => {

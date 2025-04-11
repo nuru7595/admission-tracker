@@ -12,60 +12,75 @@ export default function Execution({ daysLeft }) {
         gk: { name: "GK", planned: 50 },
     };
 
-    const getPagesCount = (pages) =>
-        pages?.split(",").filter((x) => x.trim() !== "").length || 0;
+    const getPageArray = (pages) =>
+        pages?.split(",").map((x) => x.trim()).filter((x) => x !== "") || [];
 
-    // Calculate total pages read
-    const totalRead = Object.keys(subjects).reduce((acc, key) => {
-        acc[key] = data.reduce((sum, entry) => sum + getPagesCount(entry[key]), 0);
-        return acc;
-    }, {});
+    const totalRead = {};
+    const totalRevision = {};
 
-    // Calculate total planned pages
-    const totalPlanned = Object.values(subjects).reduce((sum, { planned }) => sum + planned, 0);
+    Object.keys(subjects).forEach((key) => {
+        const pageCount = {};
+        data.forEach((entry) => {
+            getPageArray(entry[key]).forEach((page) => {
+                pageCount[page] = (pageCount[page] || 0) + 1;
+            });
+        });
 
-    // Calculate percentage progress
+        totalRead[key] = Object.keys(pageCount).length;
+        totalRevision[key] = Object.values(pageCount)
+            .filter((count) => count > 1)
+            .reduce((sum, count) => sum + (count - 1), 0);
+    });
+
+    const totalPlanned = Object.values(subjects).reduce(
+        (sum, { planned }) => sum + planned,
+        0
+    );
     const totalReadSum = Object.values(totalRead).reduce((sum, read) => sum + read, 0);
     const progressPercentage = Math.min(
         Math.round((totalReadSum / totalPlanned) * 100),
         100
     );
 
-    const getBg = (read, target) =>
-        read >= target ? "bg-green-600" : "bg-red-600";
+    const getBg = (read, target) => (read >= target ? "bg-green-600" : "bg-red-600");
 
     return (
-        <div className="section-container">
+        <div className="section-container p-2 sm:p-4">
             {/* Summary Table */}
-            <table className="w-full text-center text-xs sm:text-base mb-4">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Total Read / Planned</th>
-                        <th>Daily Target</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.entries(subjects).map(([key, { name, planned }]) => {
-                        const read = totalRead[key];
-                        const remaining = Math.max(0, planned - read);
-                        const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
+            <div className="overflow-x-auto">
+                <table className="min-w-full text-center text-sm sm:text-base mb-4">
+                    <thead>
+                        <tr>
+                            <th className="p-2">Subject</th>
+                            <th className="p-2">Read / Planned</th>
+                            <th className="p-2">Revisions</th>
+                            <th className="p-2">Daily Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.entries(subjects).map(([key, { name, planned }]) => {
+                            const read = totalRead[key];
+                            const revision = totalRevision[key];
+                            const remaining = Math.max(0, planned - read);
+                            const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
 
-                        return (
-                            <tr key={key}>
-                                <td>{name}</td>
-                                <td className={`${getBg(read, planned)} text-white p-2`}>
-                                    {read} / {planned}
-                                </td>
-                                <td>{dynamicDaily}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+                            return (
+                                <tr key={key}>
+                                    <td className="p-2">{name}</td>
+                                    <td className={`${getBg(read, planned)} text-white p-2`}>
+                                        {read} / {planned}
+                                    </td>
+                                    <td className="p-2">{revision}</td>
+                                    <td className="p-2">{dynamicDaily}</td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
 
             {/* Progress Bar */}
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-6">
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-6 overflow-hidden">
                 <div
                     className="bg-green-600 h-full text-xs text-center text-white rounded-full"
                     style={{ width: `${progressPercentage}%` }}
@@ -74,38 +89,37 @@ export default function Execution({ daysLeft }) {
                 </div>
             </div>
 
-            {/* Daily Breakdown Table */}
+            {/* Daily Breakdown */}
             {data.map((entry, index) => (
-                <table
-                    key={index}
-                    className="my-3 w-full text-center text-xs sm:text-base table-fixed"
-                >
-                    <caption className="font-bold text-xl my-2">{entry.id}</caption>
-                    <thead>
-                        <tr>
-                            <th>Subject</th>
-                            <th>Pages Read</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Object.entries(subjects)
-                            .filter(([key]) => entry[key])
-                            .map(([key, { name, planned }]) => {
-                                const pagesRead = getPagesCount(entry[key]);
-                                const remaining = Math.max(0, planned - totalRead[key]);
-                                const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
+                <div key={index} className="overflow-x-auto my-4">
+                    <table className="min-w-full text-center text-sm sm:text-base table-fixed">
+                        <caption className="font-bold text-base sm:text-xl my-2">{entry.id}</caption>
+                        <thead>
+                            <tr>
+                                <th className="p-2">Subject</th>
+                                <th className="p-2">Pages Read</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Object.entries(subjects)
+                                .filter(([key]) => entry[key])
+                                .map(([key, { name, planned }]) => {
+                                    const pagesRead = getPageArray(entry[key]).length;
+                                    const remaining = Math.max(0, planned - totalRead[key]);
+                                    const dynamicDaily = Math.ceil(remaining / (daysLeft || 1));
 
-                                return (
-                                    <tr key={key}>
-                                        <td>{name}</td>
-                                        <td className={`${getBg(pagesRead, dynamicDaily)} text-white p-2`}>
-                                            {entry[key]}
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
+                                    return (
+                                        <tr key={key}>
+                                            <td className="p-2">{name}</td>
+                                            <td className={`${getBg(pagesRead, dynamicDaily)} text-white p-2`}>
+                                                {entry[key]}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                        </tbody>
+                    </table>
+                </div>
             ))}
         </div>
     );
