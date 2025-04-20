@@ -2,7 +2,7 @@ import { data } from "../data/data";
 import Login from "./Login";
 
 const subjects = {
-  b1: ["Ban. 1", 80], b2: ["Ban. 2", 76], en: ["Eng.", 90],
+  b1: ["Ban. 1", 61], b2: ["Ban. 2", 95], en: ["Eng.", 90],
   cv: ["Civics", 18], ec: ["Eco.", 20], sc: ["Socio.", 14],
   py: ["Psyc.", 14], gk: ["GK", 50],
 };
