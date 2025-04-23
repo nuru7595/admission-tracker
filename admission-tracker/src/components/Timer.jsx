@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
     const [time, setTime] = useState({});
-    const targetDate = useMemo(() => new Date(2025, 4, 2, 8, 0, 0), []);
+    const targetDate = useMemo(() => new Date(2025, 4, 23, 8, 0, 0), []);
 
     useEffect(() => {
         const update = () => {
@@ -60,14 +60,14 @@ const Timer = () => {
                 <p>
                     Off Day:{" "}
                     <span className="text-green-600 font-bold">
-                        02 May 2025
+                        23 May 2025
                     </span>{" "}
                     Friday
                 </p>
                 <p>
                     Exam Date:{" "}
                     <span className="text-green-600 font-bold">
-                        03 May 2025
+                        24 May 2025
                     </span>{" "}
                     Saturday
                 </p>
