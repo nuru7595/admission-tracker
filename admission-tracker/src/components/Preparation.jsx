@@ -6,7 +6,14 @@ export default function Preparation() {
                 <p>
                     1.{" "}
                     <span className="font-bold text-green-600">Admit Card</span>{" "}
-                    (You will get it 7 days before the exam.)
+                    =&gt;
+                    <a
+                        className="font-bold text-sm bg-blue-600 px-3 py-[2px] rounded-md mx-2"
+                        href="http://app55.nu.edu.bd/nu-web/applicantLogin.action?degreeName=Honours"
+                        target="_blank"
+                    >
+                        Download Now
+                    </a>
                 </p>
                 <p>
                     2. HSC{" "}
