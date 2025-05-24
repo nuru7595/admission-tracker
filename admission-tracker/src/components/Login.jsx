@@ -15,8 +15,8 @@ export default function Login({ onLogin }) {
 
     return (
         <div className="section-container">
-            <p className="text-center text-green-600 mb-3">
-                🔒 Please log in to see the full execution breakdown.
+            <p className="border-y-2 border-red-600 rounded-lg p-1 text-center mb-3 text-red-600">
+                Unknown Device !!
             </p>
             <form onSubmit={handleLogin}>
                 <input
@@ -31,7 +31,7 @@ export default function Login({ onLogin }) {
                     type="submit"
                     className="w-full block border-y-2 border-white rounded-lg p-1 mt-3 cursor-pointer select-none"
                 >
-                    Log In
+                    Submit
                 </button>
             </form>
         </div>

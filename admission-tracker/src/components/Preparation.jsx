@@ -21,7 +21,7 @@ export default function Preparation() {
                     </span>
                 </p>
                 <p>
-                    Up to 3-4 Black{" "}
+                    Up to 2-3 Black{" "}
                     <span className="font-bold text-green-600">
                         Ballpoint Pens
                     </span>
