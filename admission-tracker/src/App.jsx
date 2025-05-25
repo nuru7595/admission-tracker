@@ -9,7 +9,7 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [daysLeft, setDaysLeft] = useState(0);
 
-    const targetDate = useMemo(() => new Date("2025-05-30"), []);
+    const targetDate = useMemo(() => new Date("2025-05-31"), []);
 
     useEffect(() => {
         const updateDaysLeft = () => {
