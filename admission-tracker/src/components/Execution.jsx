@@ -9,7 +9,7 @@ const subjects = {
     ec: ["Eco.", 21],
     sc: ["Socio.", 14],
     py: ["Psyc.", 14],
-    gk: ["GK", 50],
+    gk: ["GK", 48],
 };
 
 const getPages = (val) =>
