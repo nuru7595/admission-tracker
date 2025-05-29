@@ -6,50 +6,43 @@ const subjects = {
     b2: ["Ban. 2", 95],
     en: ["Eng.", 90],
     cv: ["Civics", 18],
-    ec: ["Eco.", 20],
+    ec: ["Eco.", 21],
     sc: ["Socio.", 14],
     py: ["Psyc.", 14],
     gk: ["GK", 50],
 };
 
 const getPages = (val) =>
-    val
-        ?.split(",")
-        .map((x) => x.trim())
-        .filter(Boolean) || [];
+    val?.split(",").map((x) => x.trim()).filter(Boolean) || [];
 
 const analyzeData = () => {
-    const totalRead = {},
-        totalRevision = {};
+    const totalRead = {};
     Object.keys(subjects).forEach((key) => {
-        const counts = {};
-        data.forEach((entry) =>
+        const pages = {};
+        data.forEach((entry) => {
             getPages(entry[key]).forEach(
-                (p) => (counts[p] = (counts[p] || 0) + 1)
-            )
-        );
-        totalRead[key] = Object.keys(counts).length;
-        totalRevision[key] = Object.values(counts).reduce(
-            (a, c) => a + (c > 1 ? c - 1 : 0),
-            0
-        );
+                (p) => (pages[p] = (pages[p] || 0) + 1)
+            );
+        });
+        totalRead[key] = Object.keys(pages).length;
     });
-    return [totalRead, totalRevision];
+    return totalRead;
 };
 
 const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
-    const [totalRead, totalRevision] = analyzeData();
+    const totalRead = analyzeData();
+
     const totalPlanned = Object.values(subjects).reduce(
-        (sum, [_, planned]) => sum + planned,
+        (sum, [, planned]) => sum + planned,
         0
     );
-    const totalReadSum = Object.values(totalRead).reduce((a, b) => a + b, 0);
-    const totalRevSum = Object.values(totalRevision).reduce((a, b) => a + b, 0);
 
+    const totalReadSum = Object.values(totalRead).reduce((a, b) => a + b, 0);
     const percent = (val) =>
         Math.min(Math.round((val / totalPlanned) * 100), 100);
-    const getBg = (val, target) =>
-        val >= target ? "bg-green-600" : "bg-red-600";
+
+    const getBg = (read, planned) =>
+        read >= planned ? "bg-green-600" : "bg-red-600";
 
     return (
         <section>
@@ -62,36 +55,14 @@ const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
             ) : (
                 <>
                     <div className="space-y-2 text-center">
-                        <div>
-                            <div className="w-full bg-white h-4 overflow-hidden">
-                                <div
-                                    className="bg-green-600 h-full text-xs font-bold text-center text-white"
-                                    style={{
-                                        width: `${percent(totalReadSum)}%`,
-                                    }}
-                                >
-                                    {percent(totalReadSum)}%
-                                </div>
+                        <div className="w-full bg-white h-4 overflow-hidden">
+                            <div
+                                className="bg-green-600 h-full text-xs font-bold text-center text-white"
+                                style={{ width: `${percent(totalReadSum)}%` }}
+                            >
+                                {percent(totalReadSum)}%
                             </div>
                         </div>
-
-                        {totalRevSum > 0 && (
-                            <div>
-                                <div className="text-sm mb-1">
-                                    Revision Progress
-                                </div>
-                                <div className="w-full bg-white h-4 overflow-hidden">
-                                    <div
-                                        className="bg-green-600 h-full text-xs font-bold text-center text-white"
-                                        style={{
-                                            width: `${percent(totalRevSum)}%`,
-                                        }}
-                                    >
-                                        {percent(totalRevSum)}%
-                                    </div>
-                                </div>
-                            </div>
-                        )}
                     </div>
 
                     <div className="section-container p-2 sm:p-4 mt-1">
@@ -101,20 +72,19 @@ const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
                                     <tr>
                                         <th className="p-2">Subject</th>
                                         <th className="p-2">Read / Planned</th>
-                                        <th className="p-2">
-                                            Revisions / Planned
-                                        </th>
                                         <th className="p-2">Daily Target</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {Object.entries(subjects).map(
                                         ([key, [name, planned]]) => {
-                                            const read = totalRead[key],
-                                                rev = totalRevision[key];
+                                            const read = totalRead[key];
+                                            const remaining = Math.max(
+                                                0,
+                                                planned - read
+                                            );
                                             const daily = Math.ceil(
-                                                Math.max(0, planned - read) /
-                                                    (daysLeft || 1)
+                                                remaining / (daysLeft || 1)
                                             );
                                             return (
                                                 <tr key={key}>
@@ -128,14 +98,6 @@ const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
                                                         )} text-white p-2`}
                                                     >
                                                         {read} / {planned}
-                                                    </td>
-                                                    <td
-                                                        className={`${getBg(
-                                                            rev,
-                                                            planned
-                                                        )} text-white p-2`}
-                                                    >
-                                                        {rev} / {planned}
                                                     </td>
                                                     <td className="p-2">
                                                         {daily}
@@ -167,12 +129,12 @@ const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
                                                 const count = getPages(
                                                     entry[key]
                                                 ).length;
-                                                const remain = Math.max(
+                                                const remaining = Math.max(
                                                     0,
                                                     planned - totalRead[key]
                                                 );
                                                 const daily = Math.ceil(
-                                                    remain / (daysLeft || 1)
+                                                    remaining / (daysLeft || 1)
                                                 );
                                                 return (
                                                     <tr key={key}>
