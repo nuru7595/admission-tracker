@@ -13,7 +13,10 @@ const subjects = {
 };
 
 const getPages = (val) =>
-    val?.split(",").map((x) => x.trim()).filter(Boolean) || [];
+    val
+        ?.split(",")
+        .map((x) => x.trim())
+        .filter(Boolean) || [];
 
 const analyzeData = () => {
     const totalRead = {};
@@ -47,7 +50,7 @@ const Execution = ({ daysLeft, isLoggedIn, onLogin }) => {
     return (
         <section>
             <h3 className={`section-title ${isLoggedIn ? "!border-b-0" : ""}`}>
-                The Execution
+                Study Tracker
             </h3>
 
             {!isLoggedIn ? (

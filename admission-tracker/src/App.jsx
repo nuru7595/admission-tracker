@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Timer from "./components/Timer";
 import Execution from "./components/Execution";
 import Footer from "./components/Footer";
-import Preparation from "./components/Preparation";
 
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,8 +34,6 @@ export default function App() {
 
             <main className="container">
                 <Timer />
-
-                <Preparation />
 
                 <Execution
                     daysLeft={daysLeft}
