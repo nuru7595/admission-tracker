@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
-import Timer from "./components/Timer";
 import Execution from "./components/Execution";
 import Footer from "./components/Footer";
 
@@ -33,7 +32,14 @@ export default function App() {
             <Header text="Admission Tracker" />
 
             <main className="container">
-                <Timer />
+                <section className="p-3 flex justify-center font-bold">
+                    <p>
+                        <span className="text-red-600 text-2xl">!! </span>
+                        The exam was held on 31 May 2025 from 11:00 AM to 12:00
+                        PM
+                        <span className="text-red-600 text-2xl"> !!</span>
+                    </p>
+                </section>
 
                 <Execution
                     daysLeft={daysLeft}
